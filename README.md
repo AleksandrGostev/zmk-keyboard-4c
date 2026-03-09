@@ -82,15 +82,36 @@ west build -p -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right nice_view"
 
 ## Enable Display Support (Optional)
 
-To enable nice!view display support:
+To enable nice!view display support, you have two options:
 
-1. Uncomment the display configuration in your config files or add to your keymap config:
+**Option 1: Modify the shield config files**
+1. In your ZMK config, create override files:
+   - `config/boards/shields/4c/4c.conf`
+   - `config/boards/shields/4c/4c_left.conf` 
+   - `config/boards/shields/4c/4c_right.conf`
 
-```
-CONFIG_ZMK_DISPLAY=y
-```
+2. In each file, change:
+   ```
+   CONFIG_ZMK_DISPLAY=n
+   ```
+   to:
+   ```
+   CONFIG_ZMK_DISPLAY=y
+   ```
 
-2. Build with the nice_view shield as shown above.
+3. Build with the nice_view shield:
+   ```bash
+   west build -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left nice_view"
+   west build -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right nice_view"
+   ```
+
+**Option 2: Use build-time configuration**
+1. Add to your keymap config file:
+   ```
+   CONFIG_ZMK_DISPLAY=y
+   ```
+
+2. Build with nice_view shield as above.
 
 ## Keymap
 
