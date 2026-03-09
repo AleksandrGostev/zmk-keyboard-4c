@@ -7,10 +7,11 @@ A ZMK module for the **compression 4c** keyboard - a 60-key split ergonomic keyb
 - **Split design** with left and right halves
 - **60 keys total** (6×5 layout per side + thumb clusters)  
 - **Pro Micro compatible** controllers (tested with nice!nano v2)
-- **Bluetooth connectivity** with enhanced TX power
+- **Bluetooth connectivity** with enhanced TX power (Bluetooth-only by default)
 - **4-layer keymap** with Base, Raise, Lower, and Bluetooth layers
 - **Combos and macros** included
 - **Optional OLED display** support (nice!view compatible)
+- **Optional USB support** (can be enabled if needed)
 
 ## Supported Hardware
 
@@ -182,9 +183,24 @@ The module includes these default configurations:
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_PRESS_MS=1` - Fast press debounce
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_RELEASE_MS=5` - Release debounce  
 - `CONFIG_BT_CTLR_TX_PWR_PLUS_8=y` - Enhanced Bluetooth range
+- `CONFIG_ZMK_USB=n` - Bluetooth-only (disable USB HID)
 
 Optional:
-- `CONFIG_ZMK_DISPLAY=y` - Enable OLED display (commented out by default)
+- `CONFIG_ZMK_DISPLAY=y` - Enable OLED display (disabled by default)
+- `CONFIG_ZMK_USB=y` - Enable USB HID support (disabled by default)
+
+## Enable USB Support (Optional)
+
+This keyboard is configured as Bluetooth-only by default. To enable USB support:
+
+1. In your ZMK config, override the configuration:
+   ```
+   CONFIG_ZMK_USB=y
+   ```
+
+2. This will enable USB HID functionality for wired usage.
+
+Note: The right half acts as the central device and handles USB connectivity when enabled.
 
 ## License
 

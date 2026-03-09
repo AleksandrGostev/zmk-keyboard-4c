@@ -24,7 +24,7 @@ config ZMK_SPLIT
     default y
 
 config ZMK_USB
-    default y
+    default n
 
 config ZMK_IDLE_SLEEP_TIMEOUT
     default 900000
