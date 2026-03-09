@@ -4,10 +4,8 @@ name: 4c
 type: shield
 url: https://github.com/compressionKeboards/
 requires: [pro_micro]
-exposes: [i2c_oled]
 features:
   - keys
-  - display
 siblings:
   - 4c_left
   - 4c_right

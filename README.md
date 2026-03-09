@@ -1,21 +1,21 @@
 # ZMK Keyboard Module: 4c
 
-A ZMK module for the **compression 4c** keyboard - a 60-key split ergonomic keyboard with OLED display support.
+A ZMK module for the **compression 4c** keyboard - a 60-key split ergonomic keyboard.
 
 ## Features
 
 - **Split design** with left and right halves
 - **60 keys total** (6×5 layout per side + thumb clusters)  
-- **OLED display** support (nice!view compatible)
 - **Pro Micro compatible** controllers (tested with nice!nano v2)
 - **Bluetooth connectivity** with enhanced TX power
 - **4-layer keymap** with Base, Raise, Lower, and Bluetooth layers
 - **Combos and macros** included
+- **Optional OLED display** support (nice!view compatible)
 
 ## Supported Hardware
 
 - **Controllers**: Pro Micro compatible (nice!nano v2 recommended)
-- **Displays**: nice!view OLED displays
+- **Displays**: nice!view OLED displays (optional)
 - **Layout**: 6×5 split keyboard with thumb clusters
 
 ## Installation
@@ -45,6 +45,17 @@ manifest:
 
 2. Update your `config/build.yaml`:
 
+**Without displays:**
+```yaml
+---
+include:
+  - board: nice_nano_v2
+    shield: 4c_left
+  - board: nice_nano_v2
+    shield: 4c_right
+```
+
+**With nice!view displays:**
 ```yaml
 ---
 include:
@@ -60,10 +71,26 @@ include:
 # Update dependencies
 west update
 
-# Build firmware
+# Build firmware (without display)
+west build -p -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left"
+west build -p -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right"
+
+# Build firmware (with display)
 west build -p -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left nice_view"
 west build -p -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right nice_view"
 ```
+
+## Enable Display Support (Optional)
+
+To enable nice!view display support:
+
+1. Uncomment the display configuration in your config files or add to your keymap config:
+
+```
+CONFIG_ZMK_DISPLAY=y
+```
+
+2. Build with the nice_view shield as shown above.
 
 ## Keymap
 
@@ -126,20 +153,17 @@ The keyboard uses these pin assignments:
 - Col 4: Pin 19
 - Col 5: Pin 20
 
-### Display (nice!view)
-- SCK: Pin 17
-- MOSI: Pin 8
-- CS: Pin 0
-
 ## Configuration Options
 
 The module includes these default configurations:
 
-- `CONFIG_ZMK_DISPLAY=y` - Enable OLED display
 - `CONFIG_ZMK_SLEEP=y` - Enable sleep mode
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_PRESS_MS=1` - Fast press debounce
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_RELEASE_MS=5` - Release debounce  
 - `CONFIG_BT_CTLR_TX_PWR_PLUS_8=y` - Enhanced Bluetooth range
+
+Optional:
+- `CONFIG_ZMK_DISPLAY=y` - Enable OLED display (commented out by default)
 
 ## License
 
@@ -157,6 +181,11 @@ For issues and questions:
 For local development:
 
 ```bash
+# Without display
+west build -p -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right"
+west build -p -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left"
+
+# With display  
 west build -p -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right nice_view"
 west build -p -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left nice_view"
 ```
