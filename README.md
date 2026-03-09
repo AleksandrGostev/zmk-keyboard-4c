@@ -10,7 +10,7 @@ A ZMK module for the **compression 4c** keyboard - a 60-key split ergonomic keyb
 - **Bluetooth connectivity** with enhanced TX power (Bluetooth-only by default)
 - **4-layer keymap** with Base, Raise, Lower, and Bluetooth layers
 - **Combos and macros** included
-- **Optional OLED display** support (nice!view compatible)
+- **OLED display** support (nice!view compatible, enabled by default)
 - **Optional USB support** (can be enabled if needed)
 
 ## Supported Hardware
@@ -46,6 +46,16 @@ manifest:
 
 2. Update your `config/build.yaml`:
 
+**With nice!view displays (default):**
+```yaml
+---
+include:
+  - board: nice_nano_v2
+    shield: 4c_left nice_view
+  - board: nice_nano_v2
+    shield: 4c_right nice_view
+```
+
 **Without displays:**
 ```yaml
 ---
@@ -54,16 +64,6 @@ include:
     shield: 4c_left
   - board: nice_nano_v2
     shield: 4c_right
-```
-
-**With nice!view displays:**
-```yaml
----
-include:
-  - board: nice_nano_v2
-    shield: 4c_left nice_view
-  - board: nice_nano_v2
-    shield: 4c_right nice_view
 ```
 
 3. Build and flash:
@@ -179,20 +179,16 @@ The keyboard uses these pin assignments:
 
 The module includes these default configurations:
 
-- `CONFIG_ZMK_DISPLAY=n` - Display completely disabled (no display support by default)
-- `CONFIG_LVGL=n` - LVGL graphics library disabled  
-- `CONFIG_DISPLAY=n` - Zephyr display subsystem disabled
+- `CONFIG_ZMK_DISPLAY=y` - OLED display enabled (nice!view support)
 - `CONFIG_ZMK_USB=n` - USB HID disabled (Bluetooth-only by default)
 - `CONFIG_ZMK_SLEEP=y` - Enable sleep mode
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_PRESS_MS=1` - Fast press debounce
 - `CONFIG_ZMK_KSCAN_DEBOUNCE_RELEASE_MS=5` - Release debounce  
 - `CONFIG_BT_CTLR_TX_PWR_PLUS_8=y` - Enhanced Bluetooth range
 
-## Enable Display Support (Advanced)
+## Disable Display Support (If Needed)
 
-**Important: Display support is completely disabled by default to ensure reliable builds.**
-
-To enable nice!view display support, you need to override multiple configurations in your ZMK config repository:
+If you want to build without display support, override the configuration in your ZMK config repository:
 
 1. **Create config override files:**
    - `config/boards/shields/4c/4c.conf`
@@ -201,18 +197,14 @@ To enable nice!view display support, you need to override multiple configuration
 
 2. **In each file, add:**
    ```
-   CONFIG_ZMK_DISPLAY=y
-   CONFIG_LVGL=y
-   CONFIG_DISPLAY=y
+   CONFIG_ZMK_DISPLAY=n
    ```
 
-3. **Build with nice_view shield:**
+3. **Build without nice_view shield:**
    ```bash
-   west build -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left nice_view"
-   west build -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right nice_view"
+   west build -d build/left -b nice_nano_v2 -- -DSHIELD="4c_left"
+   west build -d build/right -b nice_nano_v2 -- -DSHIELD="4c_right"
    ```
-
-**Note:** Display support requires additional device tree configuration and may cause build complexity. The keyboard works perfectly without displays.
 
 ## Enable USB Support (Optional)
 
