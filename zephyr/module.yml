@@ -1,0 +1,9 @@
+name: zmk-keyboard-4c
+
+build:
+  # No dependencies required for this keyboard module
+  depends: []
+  
+  settings:
+    # Board definitions location
+    board_root: .

@@ -1,0 +1,35 @@
+if SHIELD_4C_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "compression 4c"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default n
+
+endif
+
+if SHIELD_4C_RIGHT
+
+config ZMK_KEYBOARD_NAME
+    default "compression 4c"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+endif
+
+if SHIELD_4C_LEFT || SHIELD_4C_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+config ZMK_USB
+    default y
+
+config ZMK_IDLE_SLEEP_TIMEOUT
+    default 900000
+
+config ZMK_IDLE_TIMEOUT
+    default 30000
+
+endif
